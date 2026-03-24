@@ -58,7 +58,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", normbgcolor, NULL };
+static const char *dmenucmd[] = { "dmenu_run", } "-p", ">" ,"-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", normbgcolor, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 
 static const Key keys[] = {
@@ -95,12 +95,11 @@ static const Key keys[] = {
 		// TAGKEYS(                        XK_7,                      6)
 		// TAGKEYS(                        XK_8,                      7)
 		// TAGKEYS(                        XK_9,                      8)
-		{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-		{ MODKEY|ControlMask, XK_q,      spawn,          SHCMD("systemctl reboot")  },
+		{ MODKEY|ControlMask,             XK_q,      quit,           {0} },
 		{ MODKEY|ControlMask|ShiftMask, XK_q,      spawn,          SHCMD("systemctl poweroff")  },
 		{ MODKEY, 											XK_e,      spawn,          SHCMD("xfe")  },
 		{ MODKEY, 											XK_x, spawn,      		 SHCMD("firefox")  },
-		{ MODKEY|ShiftMask, 						XK_s, 		 spawn,          SHCMD("scrot -s --line mode=edge ~/Pictures/Screenshots/%Y%m%d_%H%M%S.png")  },
+		{ MODKEY|ShiftMask, 						XK_s, 		 spawn,          SHCMD("scrot -s --line mode=edge ~/Pictures/Screenshots/%Y%m%d-%H%M%S.png")  },
 };
 
 /* button definitions */
@@ -110,11 +109,10 @@ static const Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("playerctl -p spotify play-pause && kill -USR1 $(pidof slstatus)") },
-	{ ClkStatusText,        0,              Button2,        spawn,          SHCMD("pavucontrol && kill -USR1 $(pidof slstatus)") },
-	{ ClkStatusText,        0,              Button3,        spawn,          SHCMD("playerctl -p spotify next && kill -USR1 $(pidof slstatus)") },
-	{ ClkStatusText,        0,              Button4,        spawn,          SHCMD("amixer set Master 5%+ && kill -USR1 $(pidof slstatus)") },
-	{ ClkStatusText,        0,              Button5,        spawn,          SHCMD("amixer set Master 5%- && kill -USR1 $(pidof slstatus)") },
+	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("pwvucontrol && kill -USR1 $(pidof slstatus)") },
+	{ ClkStatusText,        0,              Button3,        spawn,          SHCMD("systemctl $(echo -e "poweroff\nreboot"| dmenu -p [GOODBYE] -sb "#d00000")") },
+	{ ClkStatusText,        0,              Button4,        spawn,          SHCMD("wpctl set-volume @DEFAULT_SINK@ 5%+ && kill -USR1 $(pidof slstatus)") },
+	{ ClkStatusText,        0,              Button5,        spawn,          SHCMD("wpctl set-volume @DEFAULT_SINK@ 5%- && kill -USR1 $(pidof slstatus)") },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
