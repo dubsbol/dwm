@@ -28,7 +28,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "alsamixer",     NULL,       "alsamixer",       0,            1,	           -1 },
+	{ "pwvucontrol",     NULL,       "pwvucontrol",       0,            1,	           -1 },
 };
 
 /* layout(s) */
@@ -58,7 +58,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", } "-p", ">" ,"-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", normbgcolor, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-p", ">" ,"-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", normbgcolor, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 
 static const Key keys[] = {
@@ -110,7 +110,7 @@ static const Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("pwvucontrol && kill -USR1 $(pidof slstatus)") },
-	{ ClkStatusText,        0,              Button3,        spawn,          SHCMD("systemctl $(echo -e "poweroff\nreboot"| dmenu -p [GOODBYE] -sb "#d00000")") },
+	{ ClkStatusText,        0,              Button3,        spawn,          SHCMD("systemctl $(echo -e \"poweroff\nreboot\"| dmenu -p [GOODBYE] -sb \"#d00000\")") },
 	{ ClkStatusText,        0,              Button4,        spawn,          SHCMD("wpctl set-volume @DEFAULT_SINK@ 5%+ && kill -USR1 $(pidof slstatus)") },
 	{ ClkStatusText,        0,              Button5,        spawn,          SHCMD("wpctl set-volume @DEFAULT_SINK@ 5%- && kill -USR1 $(pidof slstatus)") },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
